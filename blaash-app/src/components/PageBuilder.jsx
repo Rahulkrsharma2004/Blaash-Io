@@ -75,6 +75,7 @@ function PageBuilder() {
 
   const handleDragEnd = (event) => {
     const { id } = event.active;
+    // console.log(id)
     setLayout([...layout, { id }]);
   };
 

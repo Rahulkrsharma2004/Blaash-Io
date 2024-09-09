@@ -3,13 +3,13 @@ import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDqvpUrdHBtlpywoTMzp2Qy1HlADoAlN6M",
-  authDomain: "dynamicdndbuilder.firebaseapp.com",
-  projectId: "dynamicdndbuilder",
-  storageBucket: "dynamicdndbuilder.appspot.com",
-  messagingSenderId: "957183177013",
-  appId: "1:957183177013:web:794a66995b0f79267e1c7c",
-  measurementId: "G-X6LHRYB4B0"
+    apiKey: "AIzaSyCGsbx8tGZjwu349VL9duyjPiH1akwum1s",
+    authDomain: "blaash-app-3a08c.firebaseapp.com",
+    projectId: "blaash-app-3a08c",
+    storageBucket: "blaash-app-3a08c.appspot.com",
+    messagingSenderId: "383576728244",
+    appId: "1:383576728244:web:ab8359bb3b4f6bd5fd2de1",
+    measurementId: "G-D2LGES1C0J"
 };
 
 // Initialize Firebase

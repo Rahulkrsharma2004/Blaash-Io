@@ -3,13 +3,13 @@ import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCGsbx8tGZjwu349VL9duyjPiH1akwum1s",
-    authDomain: "blaash-app-3a08c.firebaseapp.com",
-    projectId: "blaash-app-3a08c",
-    storageBucket: "blaash-app-3a08c.appspot.com",
-    messagingSenderId: "383576728244",
-    appId: "1:383576728244:web:ab8359bb3b4f6bd5fd2de1",
-    measurementId: "G-D2LGES1C0J"
+    apiKey: "AIzaSyByQcdQIFiKfiEnZ4wiXC1fGt6Qr2tas-s",
+  authDomain: "dragndrop-36f11.firebaseapp.com",
+  projectId: "dragndrop-36f11",
+  storageBucket: "dragndrop-36f11.appspot.com",
+  messagingSenderId: "988919501867",
+  appId: "1:988919501867:web:d8dcdc0d92327d7987866e",
+  measurementId: "G-SLWQQKYZZF"
 };
 
 // Initialize Firebase

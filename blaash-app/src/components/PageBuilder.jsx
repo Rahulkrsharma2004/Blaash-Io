@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
 import { DndContext, useDraggable, useDroppable } from '@dnd-kit/core';
 import { db } from '../firebase';
-import { collection, getDocs, doc, setDoc, getDoc } from 'firebase/firestore'; 
+import { collection, getDocs, doc, setDoc, getDoc } from 'firebase/firestore';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Draggable = ({ id, children }) => {
   const { attributes, listeners, setNodeRef, transform } = useDraggable({ id });
@@ -38,7 +40,8 @@ function PageBuilder() {
   const [layoutName, setLayoutName] = useState('');
 
   useEffect(() => {
-    fetchLayoutFromFirebase();
+    // Clear layout state on component mount (page refresh)
+    setLayout([]);
   }, []);
 
   const handleDragEnd = (event) => {
@@ -48,33 +51,22 @@ function PageBuilder() {
 
   const saveLayout = async () => {
     if (!layoutName.trim()) {
-      alert('Please enter a layout name.');
+      toast.error('Please enter a layout name.');
       return;
     }
 
     try {
       await setDoc(doc(db, 'layouts', layoutName), { layout });
-      alert('Layout saved to Firebase!');
+      toast.success('Layout saved to Firebase!');
     } catch (error) {
       console.error('Error saving layout to Firebase:', error);
-      alert('Failed to save layout.');
-    }
-  };
-
-  const fetchLayoutFromFirebase = async () => {
-    try {
-      const querySnapshot = await getDocs(collection(db, 'layouts'));
-      const layouts = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-      setLayout(layouts.map(layout => layout.layout).flat());
-    } catch (error) {
-      console.error('Error fetching layouts from Firebase:', error);
-      alert('Failed to load layouts.');
+      toast.error('Failed to save layout.');
     }
   };
 
   const loadLayout = async () => {
     if (!layoutName.trim()) {
-      alert('Please enter a layout name.');
+      toast.error('Please enter a layout name.');
       return;
     }
 
@@ -83,13 +75,13 @@ function PageBuilder() {
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
         setLayout(docSnap.data().layout);
-        alert('Layout loaded from Firebase!');
+        toast.success('Layout loaded from Firebase!');
       } else {
-        alert('No layout found with that name.');
+        toast.error('No layout found with that name.');
       }
     } catch (error) {
       console.error('Error loading layout from Firebase:', error);
-      alert('Failed to load layout.');
+      toast.error('Failed to load layout.');
     }
   };
 
@@ -104,16 +96,17 @@ function PageBuilder() {
 
   return (
     <div className="p-4">
+      <ToastContainer />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="left-container">
           <h2 className="text-lg font-semibold mb-4">Drag & Drop Controls</h2>
           <DndContext onDragEnd={handleDragEnd}>
             <div className="control-panel space-y-4">
-              <Draggable id="Label">Label Component</Draggable>
-              <Draggable id="Input">Input Box Component</Draggable>
-              <Draggable id="Checkbox">Checkbox Component</Draggable>
-              <Draggable id="Button">Button Component</Draggable>
-              <Draggable id="Table">Table Component</Draggable>
+              <Draggable id="Label">Label</Draggable>
+              <Draggable id="Input">Input Box</Draggable>
+              <Draggable id="Checkbox">Checkbox</Draggable>
+              <Draggable id="Button">Button</Draggable>
+              <Draggable id="Table">Table</Draggable>
             </div>
           </DndContext>
         </div>

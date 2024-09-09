@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { DndContext, useDraggable, useDroppable } from '@dnd-kit/core';
 import { db } from '../firebase';
-import { collection, getDocs, doc, setDoc, getDoc } from 'firebase/firestore';
+import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -35,12 +35,41 @@ const Droppable = ({ id, children }) => {
   );
 };
 
+const LabelComponent = () => <label className="block mb-2 text-sm font-medium text-gray-700">Label</label>;
+
+const InputComponent = () => <input type="text" className="w-full p-2 border border-gray-300 rounded mb-4" />;
+
+const CheckboxComponent = () => (
+  <div className="flex items-center mb-4">
+    <input type="checkbox" className="h-4 w-4 text-blue-600 border-gray-300 rounded" />
+    <label className="ml-2 block text-sm text-gray-900">Checkbox</label>
+  </div>
+);
+
+const ButtonComponent = () => <button className="px-4 py-2 bg-blue-500 text-white rounded">Button</button>;
+
+const TableComponent = () => (
+  <table className="min-w-full bg-white border border-gray-300">
+    <thead>
+      <tr>
+        <th className="py-2 px-4 border-b">Header 1</th>
+        <th className="py-2 px-4 border-b">Header 2</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td className="py-2 px-4 border-b">Row 1 Col 1</td>
+        <td className="py-2 px-4 border-b">Row 1 Col 2</td>
+      </tr>
+    </tbody>
+  </table>
+);
+
 function PageBuilder() {
   const [layout, setLayout] = useState([]);
   const [layoutName, setLayoutName] = useState('');
 
   useEffect(() => {
-    // Clear layout state on component mount (page refresh)
     setLayout([]);
   }, []);
 
@@ -94,6 +123,23 @@ function PageBuilder() {
     newWindow.document.write("</div></body></html>");
   };
 
+  const renderComponent = (id) => {
+    switch (id) {
+      case 'Label':
+        return <LabelComponent />;
+      case 'Input':
+        return <InputComponent />;
+      case 'Checkbox':
+        return <CheckboxComponent />;
+      case 'Button':
+        return <ButtonComponent />;
+      case 'Table':
+        return <TableComponent />;
+      default:
+        return null;
+    }
+  };
+
   return (
     <div className="p-4">
       <ToastContainer />
@@ -136,7 +182,7 @@ function PageBuilder() {
             <h2 className="text-lg font-semibold mb-4">Drop Zone</h2>
             {layout.map((item, index) => (
               <div key={index} className="p-2 mb-2 border border-gray-300 rounded">
-                {item.id}
+                {renderComponent(item.id)}
               </div>
             ))}
           </Droppable>
